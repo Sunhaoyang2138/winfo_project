@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd  
 import numpy as np  
 
-st.title("Daten Analyse")
+st.title("kkkkkk")
 
 st.write("""
 eine kurze Beschreibung der Analyse
@@ -20,4 +20,5 @@ def get_dataset(dataset_name):
 df = get_dataset(dataset_name)
 # df['Date'] = pd.to_datetime(df.date, infer_datetime_format = True)
 # df.sort_values(by='Date', ascending = True, inplace = True)
-st.write(df)
+st.write(df.head())
+df.sort_values(by = "date")
