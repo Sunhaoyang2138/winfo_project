@@ -23,3 +23,12 @@ df = get_dataset(dataset_name)
 df.sort_values('Date', ascending = True, inplace = True)
 
 st.dataframe(df, 500, 480)
+
+st.write('Zusammenführung der Datensätze')
+#cd = combine datasets
+df1 = pd.read_csv('592M_expected.csv', sep=";")
+df2 = pd.read_csv('592M_actual.csv', sep=";")
+cd = [df1, df2]
+result = pd.concat(cd)
+result.sort_values('Date', ascending = True, inplace = True)
+st.dataframe(result)
