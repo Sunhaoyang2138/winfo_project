@@ -1,13 +1,18 @@
 import streamlit as st       
 import pandas as pd  
 import numpy as np  
-import datetime
+from datetime import datetime
 
 #read the files and conbine the datasets
 df1 = pd.read_csv('592M_expected.csv', sep=";")
 df2 = pd.read_csv('592M_actual.csv', sep=";")
 cd = [df1, df2] #cd = combine datasets
 result = pd.concat(cd)
+
+#Zeit standardisieren
+result['eventTime'] = result['eventTime'].str.split('T')
+result['eventTime.1'] = result['eventTime.1'].str.split('T')
+st.dataframe(result['eventTime' ])
 
 st.title("Projekt")
 
@@ -81,13 +86,48 @@ st.dataframe(result.groupby(['TripType'])['nodeId'].value_counts())
 st.dataframe(result.groupby(['TripType'])['nodeId.1'].value_counts())
 st.dataframe(result.groupby(['TripType'])['nodeId.2'].value_counts())
 
-#Wie viele Haltstelle gibt es?
-
-#Was ist die Standart Route von dem Zug 592M? (nur Ansatz)
+#Was ist die Standart Route von dem Zug 592M? Und wie viele Haltstelle durchschnittlich gibt es? (nur Ansatz) 
 st.dataframe(result.groupby(['TripType'])['EventType'].value_counts().idxmax())
 st.dataframe(result.groupby(['TripType'])['nodeId'].value_counts().idxmax())
+st.dataframe(result.groupby(['TripType'])['nodeId.1'].value_counts().idxmax())
+st.dataframe(result.groupby(['TripType'])['nodeId.2'].value_counts().idxmax())
+st.dataframe(result.groupby(['TripType'])['nodeId.3'].value_counts().idxmax())
+st.dataframe(result.groupby(['TripType'])['nodeId.4'].value_counts().idxmax())
+
+#dataset_name = st.selectbox("Select Dataset", ("Sollfahrtdaten(new)", "Istfahrtdaten(new)", "Zusammenführung der Datensätze(new)"))
+#st.write(dataset_name)
+
+#def value_count(df):
+    #for name, values in df.iteritems():
+         #if dataset_name == "Sollfahrtdaten(new)":
+         #df_value_counts = df1_cut.iteritems().value_counts().idxmax()
+
+         #elif dataset_name == "Istfahrtdaten(new)":
+             #df_value_counts = df2_cut.iteritems().value_counts().idxmax()
+
+         #else:
+             #df_value_counts = result_cut.iteritems().value_counts().idxmax()
+         #return df_value_count
+   
+       
+#df = value_count(df)
+
+#st.write(df)
+
+
+
+
+
+
 
 #Welche Daten sind Wochenende?
-df1['eventTime'] = pd.to_datetime(df1['eventTime'], format = '%Y-%m %H:%M:&S' )
-st.dataframe(df1['eventTime'])
+datetime.strptime('2015-12-13T16:28:54', '%Y-%m-%dT%H:%M:%S')
+st.dataframe(result['eventTime'])
+
+
+
+
 #Aufteilung nach Jahreszeiten
+#df['Month'] = df['eventTime'].str[0:2]
+#df['Month'] = df['Month'].astype('int32')
+#st.dataframe(df.head())
